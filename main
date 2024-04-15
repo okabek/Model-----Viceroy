@@ -30,6 +30,7 @@ class crysalis
         int hidden_layers = 1;
         int output_size = 1;
         double learning_rate = 0.01;
+        double last_mse = 999;
     
         vector<double> inputs;
         vector<vector<double>> weights;
@@ -174,6 +175,7 @@ class crysalis
             
             
             mse /= outputs.size();
+            last_mse = mse;
             
             cout << "MSE = " << mse << "\n";
         }
@@ -186,13 +188,20 @@ int main() {
     nn.inputs = {3, 2};
     nn.init();
     
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1000; i++)
     {
-        double answer = {i * 2};
+        double answer = i * 2;
         
-        nn.inputs = {i, 2};
+        nn.inputs = {(double)i, 2};
         nn.feed();
         nn.back_prop(answer);
+        
+        if (nn.last_mse <= 0.01) 
+        {
+            cout << "STOPPING EARLY!" << endl;
+            
+            break;
+        }
     }
     
 
