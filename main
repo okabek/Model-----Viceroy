@@ -26,7 +26,7 @@ vector<double> matrix_multiply(vector<double> x, vector<double> y)
 class crysalis
 {
     public:
-        int hidden_size = 4;
+        int hidden_size = 2;
         int hidden_layers = 1;
         int output_size = 1;
         double learning_rate = 0.01;
@@ -86,8 +86,22 @@ class crysalis
         }
         
     
+        void clear()
+        {
+            for (int i = 0; i < hidden.size(); i++)
+            {
+                for (int i2 = 0; i2 < hidden[i].size(); i2++)
+                {
+                    hidden[i][i2] = 0.0;
+                }
+            }
+        }
+    
+    
         void feed()
         {
+            clear();
+            
             for (int i = 0; i < inputs.size(); i++)
             {
                 for (int i2 = 0; i2 < hidden[0].size(); i2++)
@@ -140,7 +154,7 @@ class crysalis
             
             for (int i = 0; i < outputs.size(); i++)
             {
-                double error = answer - outputs[i];
+                double error = outputs[i] - answer;
                 
                 mse += error * error;
             }
@@ -149,7 +163,7 @@ class crysalis
             // last layer weights
             for (int i = 0; i < outputs.size(); i++)
             {
-                double cost_derivative = -2 * (answer - outputs[i]);
+                double cost_derivative = 2 * (outputs[i] - answer);
 
                 for (int i2 = 0; i2 < weights[weights.size() - 1].size(); i2++)
                 {
@@ -159,7 +173,7 @@ class crysalis
                 
                 for (int i2 = 0; i2 < biases[hidden_layers - 1].size(); i2++)
                 {
-                    biases[hidden_layers - 1][i2] -= learning_rate * cost_derivative;
+                    //biases[hidden_layers - 1][i2] -= learning_rate * cost_derivative;
                 }
             }
             
@@ -169,7 +183,7 @@ class crysalis
             {
                 for (int i2 = 0; i2 < weights[0].size(); i2++)
                 {
-                    //weights[0][i2] -= learning_rate * activate_derivative(hidden[0][i2]);
+                    //weights[0][i2] += learning_rate * activate_derivative(hidden[0][i2]);
                 }
             }
             
@@ -192,11 +206,11 @@ int main() {
     {
         double answer = i * 2;
         
-        nn.inputs = {(double)i, 2};
+        nn.inputs = {i, 2};
         nn.feed();
         nn.back_prop(answer);
         
-        if (nn.last_mse <= 0.01) 
+        if (nn.last_mse <= 0.001) 
         {
             cout << "STOPPING EARLY!" << endl;
             
