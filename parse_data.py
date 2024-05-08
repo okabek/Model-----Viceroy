@@ -47185,7 +47185,33 @@ msg = """
 01/09/2017	10:00	USD	M	Revised UoM Consumer Sentiment	96.8	97.4	97.6		64988
 """
 
+weightings = {
+    "Core": 9,
+    "Retail": 0,
+    "PPI": 0, 
+    "Trade": 0,
+    "TIC": 0,
+    "Prelim": 0,
+    "Core": 0,
+    "New": 0,
+    "Existing": 0,
+    "CB": 0,
+    "Prelim": 0,
+    "Core": 0,
+    "ISM": 0,
+    "Non-Farm": 0,
+    "Unemployment": 0,
+    "Trade": 0,
+    "Core": 0,
+    "Retail": 0,
+    "Prelim": 0, 
+    "PPI": 0,
+    "TIC": 0
+}
+
 lines = msg.splitlines()
+temp = []
+datas = []
 
 ##
 
@@ -47193,9 +47219,6 @@ def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
     
 ##
-
-temp = []
-datas = []
 
 for i in lines:
     split = i.split()
@@ -47236,7 +47259,7 @@ for i in lines:
         
         
     profile = {
-        "type": type, 
+        "weight": weightins[type], 
         "actual": actual, 
         "previous": previous, 
         "change": change
