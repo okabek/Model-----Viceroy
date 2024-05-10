@@ -105,8 +105,8 @@ for i in art:
 
 print("\n\n\n\n")
 type_write("MODEL | VICEROY", .05)
-type_write("-Learning", .05)
-type_write("-From", .05)
+type_write("-Looking", .05)
+type_write("-Into", .05)
 type_write("-The", .05)
 type_write("-Past", .05)
 print("\n\n")
