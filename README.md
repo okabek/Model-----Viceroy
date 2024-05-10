@@ -1,13 +1,9 @@
 # Viceroy
 ## *-forecasting a currency's price change in the next hour after [x news] is released by using a knn algorithm*
 ## *-model 'trained' on ~40000 pieces of data ranging from 2007 - 2017*
+\
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
+\
 &nbsp;
 ### u = mean average positive change | w = mean average negetive change | o = 1 stdev | x = forecasted change
 
