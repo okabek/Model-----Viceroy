@@ -7,4 +7,4 @@
 #"buy signal": x >= u + 1o 
 #"sell signal": x <= u - 1o
 #"strong sell signal": x <= u - 2o 
-# else "no signal found"
+#else "no signal found"
