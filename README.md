@@ -4,6 +4,7 @@
 <br/>
 <br/>
 <br/>
+</br>
 ### u = mean average positive change | w = mean average negetive change | o = 1 stdev | x = forecasted change
 
 ```
