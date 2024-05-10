@@ -1,2 +1,2 @@
 # forex-neural-network
-# - predicting direction of a currency's value by predicting future changes in interest rates 
+# - estimating how a currency's price will change in the next hour after x news is released by using a knn algorithm
