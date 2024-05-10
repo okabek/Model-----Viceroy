@@ -5,6 +5,10 @@
 &nbsp;
 &nbsp;
 &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 ### u = mean average positive change | w = mean average negetive change | o = 1 stdev | x = forecasted change
 
 ```
