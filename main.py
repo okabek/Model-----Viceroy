@@ -6,7 +6,7 @@ msg = open("data.txt", "r").read()
 lines = msg.splitlines()
 datas = []
 k = 5 # number of neighbours to check
-api_key = "48df6a4e57bd409e8e4a6b983b8ed9a3"
+api_key = "exAhOWAEye9oRcIEn3qX"
 
 ##
 
@@ -14,52 +14,33 @@ def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 
-def find_nearest(score):
+def find_nearest(type, score):
     nearest_profile = -1; 
     smallest_difference = 9999999999999
 
     for i in datas:
-        sample_score = i["score"]
+        sample_score = i["change"]
         abs_diff = abs(score - sample_score)
-
-        if (abs_diff < smallest_difference):
+        if (abs_diff < smallest_difference and i["type"] == type):
             nearest_profile = i
             smallest_difference = abs_diff
 
 
-    print("NEAREST SCORE = " + str(i["score"]))
+    print(nearest_profile)
 
-    date_object = datetime.datetime.strptime(i["date"], "%d/%m/%Y")
-    converted_date = date_object.strftime("%Y/%m/%d")
-    next_date = (date_object + datetime.timedelta(days=1)).strftime("%Y/%m/%d")
+    date_object = datetime.datetime.strptime(nearest_profile["date"], "%d/%m/%Y")
+    current_date = date_object.strftime("%Y-%m-%d")
+    next_date = (date_object + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
-    url = "https://api.twelvedata.com/time_series?start_date=" + converted_date + "&end_date=" + next_date + "&outputsize=96&symbol=EUR/USD&interval=15min&apikey=" + api_key
-    request = requests.get(url)
-    values = request["values"]
+    url = "https://marketdata.tradermade.com/api/v1/historical?api_key=" + api_key + "&currency=EURUSD&date=" + current_date
+    request = requests.get(url).json()
+    start_price = request["quotes"][0]["close"]
 
-    date_object2 = datetime.datetime.strptime(i["time"], "%H:%M")
-    converted_date2 = date_object.strftime("%H/%M")
+    url = "https://marketdata.tradermade.com/api/v1/historical?api_key=" + api_key + "&currency=EURUSD&date=" + next_date
+    request = requests.get(url).json()
+    end_price = request["quotes"][0]["close"]
 
-    start_time = i["time"]
-    stop_time = (date_object2 + datetime.timedelta(hours=1)).strftime("%H%M")
-    start_price = -1
-    end_price = -1 
-
-    for i in values:
-        dt = i["datetime"]
-        dt2 = datetime.split(":")
-        dt_time = dt2[0].split(" ")[1] + ":" + dt2[1]
-
-        close = i["close"]
-
-        if (dt_time == start_time):
-            start_price = close
-
-        elif (dt_time == stop_time):
-            end_price = close      
-
-
-    return(end_price - start_price) / start_price
+    return round((end_price - start_price) / start_price, 5)
 
 
 ##
@@ -83,25 +64,30 @@ for i in lines:
 
 
     if (len(split) < index + 3):
-        continue;
+        continue
 
 
     actual = float(re.sub('\D', '', split[index]))
     forecast = float(re.sub('\D', '', split[index + 1]))
     previous = float(re.sub('\D', '', split[index + 2]))
-    change = actual - previous 
+
     profile = {
+        "type": type,
         "date": split[0],
         "time": split[1],
         "actual": actual, 
         "previous": previous, 
-        "change": change,
-        "score": (actual + previous) * change
+        "change": actual - previous
     }
 
     datas.append(profile)
 
 
-forecast = find_nearest(-500)
+#
 
-print("PRICE MAY CHANGE BY " + str(forecast) + "%")
+type = "Unemployment Claims"
+actual = 231 
+predicted = 212 
+forecast = find_nearest(type, actual - predicted)
+
+print("Expected change of " + str(-forecast) + "%" + " For the USD")
