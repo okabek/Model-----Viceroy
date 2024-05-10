@@ -12,14 +12,14 @@ api_key = "exAhOWAEye9oRcIEn3qX"
 
 ##
 
-def type_write(txt):
+def type_write(txt, length):
   txt = txt + "\n"
 
   for char in txt:
       sys.stdout.write(char)
       sys.stdout.flush()
 
-      time.sleep(0.05)
+      time.sleep(length)
 
 
 def has_numbers(inputString):
@@ -103,15 +103,17 @@ for i in art:
   print(i)
 
 
-type_write("MODEL | VICEROY")
-type_write("Learning")
-type_write("From")
-type_write("The")
-type_write("Past")
+print("\n\n\n\n")
+type_write("MODEL | VICEROY", .05)
+type_write("-Learning", .05)
+type_write("-From", .05)
+type_write("-The", .05)
+type_write("-Past", .05)
+print("\n\n")
 
 #
 
-type = input("Enter the name of th economic indicator: ")
+type = input("Enter the name of the economic indicator: ")
 actual = float(input("Enter the newly released actual value: "))
 predicted = float(input("Enter the old forecasted value: "))
 forecast = find_nearest(type, actual - predicted)
