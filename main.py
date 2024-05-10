@@ -118,4 +118,4 @@ actual = float(input("Enter the newly released actual value: "))
 predicted = float(input("Enter the old forecasted value: "))
 forecast = find_nearest(type, actual - predicted)
 
-print("I forecast a change of " + str(-forecast) + "%" + " occured for the USD")
+print("I forecast a change of " + str(-forecast) + "%" + " for the USD")
