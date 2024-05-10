@@ -1,6 +1,8 @@
 import re 
 import requests
 import datetime
+import sys
+import time
 
 msg = open("data.txt", "r").read()
 lines = msg.splitlines()
@@ -9,6 +11,16 @@ k = 5 # number of neighbours to check
 api_key = "exAhOWAEye9oRcIEn3qX"
 
 ##
+
+def type_write(txt):
+  txt = txt + "\n"
+
+  for char in txt:
+      sys.stdout.write(char)
+      sys.stdout.flush()
+
+      time.sleep(0.05)
+
 
 def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
@@ -85,9 +97,29 @@ for i in lines:
 
 #
 
-type = "Unemployment Claims"
-actual = 231 
-predicted = 212 
+art = open("art.txt", 'r').readlines()
+
+for i in art:
+  print(i)
+
+
+type_write("W.E.T | W.A.L.L")
+type_write("With")
+type_write("Every")
+type_write("Trade")
+
+time.sleep(1)
+
+type_write("We")
+type_write("Always")
+type_write("Love")
+type_write("Losing")
+
+#
+
+type = input("Enter the name of th economic indicator: ")
+actual = float(input("Enter the newly released actual value: "))
+predicted = float(input("Enter the old forecasted value: "))
 forecast = find_nearest(type, actual - predicted)
 
-print("Expected change of " + str(-forecast) + "%" + " For the USD")
+print("I forecast a change of " + str(-forecast) + "%" + " occured for the USD")
