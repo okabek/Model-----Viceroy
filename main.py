@@ -103,17 +103,11 @@ for i in art:
   print(i)
 
 
-type_write("W.E.T | W.A.L.L")
-type_write("With")
-type_write("Every")
-type_write("Trade")
-
-time.sleep(1)
-
-type_write("We")
-type_write("Always")
-type_write("Love")
-type_write("Losing")
+type_write("MODEL | VICEROY")
+type_write("Learning")
+type_write("From")
+type_write("The")
+type_write("Past")
 
 #
 
