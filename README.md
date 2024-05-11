@@ -7,9 +7,9 @@
 &nbsp;
 
 ```
-"strong buy signal": change >= .50%
-"buy signal": change >= .25%
-"sell signal": change <= -.25%
-"strong sell signal": <= -.50%
+"strong buy signal": change >= .25%
+"buy signal": change >= .1%
+"sell signal": change <= -.1%
+"strong sell signal": <= -.25%
 else "no signal"
 ```
