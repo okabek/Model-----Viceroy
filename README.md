@@ -1,5 +1,5 @@
 # MARX
-### *- An econometric trading model
+### *- An econometric trading model*
 
 ```
 Linear Regression
