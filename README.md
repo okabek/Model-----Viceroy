@@ -1,2 +1,2 @@
 # Viceroy
-### *-forecasting economic indicators rather than price directly
+### *-forecasting economic indicators rather than price directly*
