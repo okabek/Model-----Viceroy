@@ -1,2 +1,8 @@
-# Viceroy
-### *-forecasting economic indicators rather than price directly*
+# MARX
+### *- An econometric trading model
+
+```
+Linear Regression
+Polynomial Regression
+Machine learning 
+```
