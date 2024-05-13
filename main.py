@@ -1,6 +1,5 @@
 import numpy as np 
 import requests
-import datetime
 import sys
 import time
 import math 
@@ -8,16 +7,11 @@ from scipy import stats
 
 msg = open("data.txt", "r").read()
 lines = msg.splitlines()
+token = "66420cb84cae85.81165144"
 
 ##
 # notes: 
-# ppi is significantly better at forecasting cpi than cpi is for ppi 
-
-def hash(x, y):
-    change = x - y 
-    
-    return x * y * change
-        
+# ppi is better at forecasting cpi than cpi is for ppi 
 
 def type_write(txt, length):
   txt = txt + "\n"
@@ -86,10 +80,10 @@ def test(name1, name2):
         previous = float(''.join(c for c in previous if c.isdigit() or c == '-' or c == '.'))
   
         if (type == name1 and len(data_a) == len(data_b)):
-            data_a.append(hash(actual, previous))
+            data_a.append(actual)
 
         elif (type == name2 and len(data_a) == len(data_b) + 1):
-            data_b.append(hash(actual, previous))
+            data_b.append(actual)
 
 
     if (len(data_a) > len(data_b)):
@@ -110,6 +104,8 @@ def test(name1, name2):
     if (p < 0.05):
         type_write(name1 + " and " + name2 + " are correlated.", .05)
         type_write("r = " + str(r), .05)
+        type_write("Running forecast algorithm...", .05)
+        forecast(name1, name2, r)
     
     else: 
         type_write("There is no correlation between X and Y", .05)
@@ -119,7 +115,9 @@ def test(name1, name2):
 art = open("art.txt", 'r').readlines()
 
 for i in art:
-  print(i)
+    print(i)
+
+    time.sleep(.1)
 
 
 print("\n\n\n\n")
