@@ -1,43 +1,46 @@
-import numpy as np 
+import numpy as np
 import requests
 import sys
 import time
-import math 
+import math
 from scipy import stats
 
 msg = open("data.txt", "r").read()
 lines = msg.splitlines()
 token = "66420cb84cae85.81165144"
 
-##
-# notes: 
-# [PPI m/m] <-> [CPI m/m] = 0.7
+# FORMAT: Use this -> To predict this = Correlation / success rate
+# [PPI m/m] -> [CPI m/m] = 0.7
 # [CPI m/m] -> [Core PCE Price Index m/m] = 0.4
-# [Non-Farm Employment Change] -> [ADP Non-Farm Employment Change] = 0.9
-# [
+# [ADP Non-Farm Employment Change] -> [Non-Farm Employment Change] = 0.9
+# [Unemployment Claims] -> [Unemployment Rate] = 0.75
+# [Revised UoM Consumer Sentiment] -> [CB Consumer Confidence] = 0.9
+# [Final Manufacturing PMI] -> [ISM Manufacturing PMI] = 0.5
+# [ISM Manufacturing PMI] -> [ISM Non-Manufacturing PMI] = 0.7
+
+# Note: all of these passed hypothesis testing using 0.05 significance level
 
 def type_write(txt, length):
-  txt = txt + "\n"
+    txt = txt + "\n"
 
-  for char in txt:
-      sys.stdout.write(char)
-      sys.stdout.flush()
+    for char in txt:
+        sys.stdout.write(char)
+        sys.stdout.flush()
 
-      time.sleep(length)
+        time.sleep(length)
 
 
 def is_number(inputString):
     output = ''.join(c for c in inputString if c.isdigit() or c == '-' or c == '.')
-    numeric = False 
+    numeric = False
 
     try:
         output = float(output)
-        numeric = True 
+        numeric = True
 
-    except: 
-        None 
+    except:
+        None
 
-    
     return numeric
 
 
@@ -55,24 +58,20 @@ def test(name1, name2):
         if (len(split) <= 1 or split[2] != "USD"):
             continue
 
-
-        type = split[4] 
+        type = split[4]
         index = 5
 
-        for i2 in range(len(split) - 5): 
+        for i2 in range(len(split) - 5):
             data = split[index]
 
             if (is_number(data) and data != "Composite-20"):
                 break
 
-
             type = type + " " + split[index]
-            index += 1 
-
+            index += 1
 
         if (len(split) < index + 3):
             continue
-
 
         actual = split[index]
         forecast = split[index + 1]
@@ -81,13 +80,12 @@ def test(name1, name2):
         actual = float(''.join(c for c in actual if c.isdigit() or c == '-' or c == '.'))
         forecast = float(''.join(c for c in forecast if c.isdigit() or c == '-' or c == '.'))
         previous = float(''.join(c for c in previous if c.isdigit() or c == '-' or c == '.'))
-  
+
         if (type == name1 and len(data_a) == len(data_b)):
             data_a.append(actual)
 
         elif (type == name2 and len(data_a) == len(data_b) + 1):
             data_b.append(actual)
-
 
     if (len(data_a) > len(data_b)):
         data_a.pop()
@@ -97,25 +95,26 @@ def test(name1, name2):
 
 
     print("\nTesting using a 5% significance level...")
-    
+
     r = np.corrcoef(data_a, data_b)[0][1]
     n = len(data_a)
     df = n - 2
     t = r / math.sqrt((1 - r * r) / df)
     p = 1 - stats.t.cdf(t, df)
-    
+
     if (p < 0.05):
-        type_write(name1 + " and " + name2 + " are correlated.", .05)
-        type_write("r = " + str(r), .05)
+        print(name1 + " and " + name2 + " are correlated.", .05)
+        print("r = " + str(r), .05)
         type_write("Running forecast algorithm...", .05)
         forecast(name1, name2, r)
-    
-    else: 
+
+    else:
         type_write("There is no correlation between X and Y", .05)
-    
+
+
 ##
 
-art = open("art.txt", 'r').readlines()
+art = open("art.txt", 'r', encoding="utf8").readlines()
 
 for i in art:
     print(i)
@@ -125,7 +124,7 @@ for i in art:
 
 print("\n\n\n\n")
 type_write("MODEL | VICEROY", .05)
-type_write("Forecasting the value of indicator [a] based on indicator [b]", .05)
+type_write("- An econometric model", .05)
 print("\n\n")
 
 ##
