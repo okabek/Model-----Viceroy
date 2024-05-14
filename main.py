@@ -11,7 +11,10 @@ token = "66420cb84cae85.81165144"
 
 ##
 # notes: 
-# ppi is better at forecasting cpi than cpi is for ppi 
+# [PPI m/m] <-> [CPI m/m] = 0.7
+# [CPI m/m] -> [Core PCE Price Index m/m] = 0.4
+# [Non-Farm Employment Change] -> [ADP Non-Farm Employment Change] = 0.9
+# [
 
 def type_write(txt, length):
   txt = txt + "\n"
